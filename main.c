@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define N 10  // Número de vértices no grafo
+#define N 3633  // Número de vértices no grafo
 
 // Função para encontrar o vértice com o maior grau
-void encontrarMaiorGrau(int grafo[N][N]) {
+void encontrarMaiorGrau(int** grafo) {
     int maxGrau = 0;
     int grau[N] = {0};
 
@@ -30,7 +30,7 @@ void encontrarMaiorGrau(int grafo[N][N]) {
 }
 
 // Função para encontrar os vértices isolados
-void encontrarVerticesIsolados(int grafo[N][N]) {
+void encontrarVerticesIsolados(int** grafo) {
     printf("VERTICE(S) ISOLADO(S): \n");
     for (int i = 0; i < N; i++) {
         int somaLinha = 0;
@@ -47,7 +47,7 @@ void encontrarVerticesIsolados(int grafo[N][N]) {
 }
 
 // Função para encontrar o vértice sumidouro
-void encontrarVerticeSumidouro(int grafo[N][N]) {
+void encontrarVerticeSumidouro(int** grafo) {
     printf("VERTICE(S) SUMIDOURO(S): \n");
     for (int i = 0; i < N; i++) {
         int somaLinha = 0;
@@ -64,7 +64,7 @@ void encontrarVerticeSumidouro(int grafo[N][N]) {
 }
 
 // Função para encontrar o vértice fonte
-void encontrarVerticeFonte(int grafo[N][N]) {
+void encontrarVerticeFonte(int** grafo) {
     printf("VERTICE(S) FONTE(S): \n");
     for (int j = 0; j < N; j++) {
         int somaColuna = 0;
@@ -81,7 +81,7 @@ void encontrarVerticeFonte(int grafo[N][N]) {
 }
 
 // Função para verificar se o primeiro e o último vértice estão conectados
-void verificarConexao(int grafo[N][N]) {
+void verificarConexao(int** grafo) {
     if (grafo[0][N-1] == 1 || grafo[N-1][0] == 1) {
         printf("O primeiro e o ultimo vertice estao conectados.\n");
         printf("---------------------------------------------------\n");
@@ -93,11 +93,11 @@ void verificarConexao(int grafo[N][N]) {
 }
 
 // Função para escrever o grau de cada vértice em um arquivo
-void escreverGraus(int grafo[N][N]) {
+void escreverGraus(int** grafo) {
     FILE *file = fopen("dados_grafos_graus.txt", "w");
 
     if (file == NULL) {
-        printf("Não foi possível abrir o arquivo.\n");
+        printf("Nao foi possível abrir o arquivo.\n");
         return;
     }
 
@@ -113,8 +113,13 @@ void escreverGraus(int grafo[N][N]) {
 }
 
 int main() {
-    int grafo[N][N];
-    FILE *file = fopen("matriz_teste.txt", "r");
+    // Aloca a matriz dinamicamente
+    int** grafo = (int**)malloc(N * sizeof(int*));
+    for (int i = 0; i < N; i++) {
+        grafo[i] = (int*)malloc(N * sizeof(int));
+    }
+
+    FILE *file = fopen("dados_matriz.txt", "r");
 
     if (file == NULL) {
         printf("Nao foi possível abrir o arquivo.\n");
@@ -137,6 +142,12 @@ int main() {
 
     // Chama a função para escrever o grau de cada vértice em um arquivo
     escreverGraus(grafo);
+
+    // Libera a memória alocada para a matriz
+    for (int i = 0; i < N; i++) {
+        free(grafo[i]);
+    }
+    free(grafo);
 
     return 0;
 }
