@@ -17,14 +17,30 @@ void encontrarMaiorGrau(int grafo[N][N]) {
         }
     }
 
-    // Imprime os vértices com o maior grau
-    printf("Vertice(s) com o maior grau: \n");
+    printf("--------------------------\n");
+    printf("VERTICE(S) COM MAIOR GRAU: \n");
     for (int i = 0; i < N; i++) {
         if (grau[i] == maxGrau) {
             printf("d(%d) = %d\n", i+1, maxGrau);
         }
     }
-    printf("\n");
+    printf("--------------------------\n");
+
+}
+
+// Função para encontrar os vértices isolados
+void encontrarVerticesIsolados(int grafo[N][N]) {
+    printf("VERTICE(S) ISOLADO(S): ");
+    for (int i = 0; i < N; i++) {
+        int soma = 0;
+        for (int j = 0; j < N; j++) {
+            soma += grafo[i][j];
+        }
+        if (soma == 0) {
+            printf("%d \n", i+1);
+        }
+    }
+    printf("--------------------------\n");
 }
 
 int main() {
@@ -32,7 +48,7 @@ int main() {
     FILE *file = fopen("matriz_teste.txt", "r");
 
     if (file == NULL) {
-        printf("Não foi possível abrir o arquivo.\n");
+        printf("Nao foi possível abrir o arquivo.\n");
         return 1;
     }
 
@@ -46,6 +62,9 @@ int main() {
 
     // Chama a função para encontrar o vértice com o maior grau
     encontrarMaiorGrau(grafo);
+
+    // Chama a função para encontrar os vértices isolados
+    encontrarVerticesIsolados(grafo);
 
     return 0;
 }
