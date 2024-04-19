@@ -1,23 +1,31 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-#define MAX 3633
+#define N 10  // Número de vértices no grafo
 
-int grafo[MAX][MAX];
+int main() {
+    int grafo[N][N];
+    FILE *file = fopen("matriz_teste.txt", "r");
 
-void lerGrafo() {
-    FILE *file = fopen("dados_matriz.txt", "r");
     if (file == NULL) {
-        printf("Erro ao abrir o arquivo.\n");
-        return;
+        printf("Não foi possível abrir o arquivo.\n");
+        return 1;
     }
-    for(int i=0; i<MAX; i++) {
-        for(int j=0; j<MAX; j++) {
-            if (fscanf(file, "%d", &grafo[i][j]) != 1) {
-                printf("Erro ao ler os dados na linha %d, coluna %d\n", i+1, j+1);
-                return;
-            }
+
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            fscanf(file, "%d", &grafo[i][j]);
         }
     }
+
     fclose(file);
+
+    // Imprime a matriz para verificar se a leitura do arquivo está correta
+    // for (int i = 0; i < N; i++) {
+    //     for (int j = 0; j < N; j++) {
+    //         printf("%d ", grafo[i][j]);
+    //     }
+    //     printf("\n");
+    // }
+
+    return 0;
 }
