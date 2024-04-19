@@ -63,6 +63,23 @@ void encontrarVerticeSumidouro(int grafo[N][N]) {
     printf("--------------------------\n");
 }
 
+// Função para encontrar o vértice fonte
+void encontrarVerticeFonte(int grafo[N][N]) {
+    printf("VERTICE(S) FONTE(S): \n");
+    for (int j = 0; j < N; j++) {
+        int somaColuna = 0;
+        int somaLinha = 0;
+        for (int i = 0; i < N; i++) {
+            somaColuna += grafo[i][j];
+            somaLinha += grafo[j][i];
+        }
+        if (somaColuna == 0 && somaLinha != 0) {
+            printf("%d \n", j+1);
+        }
+    }
+    printf("--------------------------\n");
+}
+
 int main() {
     int grafo[N][N];
     FILE *file = fopen("matriz_teste.txt", "r");
@@ -80,14 +97,10 @@ int main() {
 
     fclose(file);
 
-    // Chama a função para encontrar o vértice com o maior grau
     encontrarMaiorGrau(grafo);
-
-    // Chama a função para encontrar os vértices isolados
     encontrarVerticesIsolados(grafo);
-
-    // Chama a função para encontrar o vértice sumidouro
     encontrarVerticeSumidouro(grafo);
+    encontrarVerticeFonte(grafo);
 
     return 0;
 }
