@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #define N 10  // Número de vértices no grafo
 
@@ -45,6 +46,23 @@ void encontrarVerticesIsolados(int grafo[N][N]) {
     printf("--------------------------\n");
 }
 
+// Função para encontrar o vértice sumidouro
+void encontrarVerticeSumidouro(int grafo[N][N]) {
+    printf("VERTICE(S) SUMIDOURO(S): \n");
+    for (int i = 0; i < N; i++) {
+        int somaLinha = 0;
+        int somaColuna = 0;
+        for (int j = 0; j < N; j++) {
+            somaLinha += grafo[i][j];
+            somaColuna += grafo[j][i];
+        }
+        if (somaLinha == 0 && somaColuna != 0) {
+            printf("%d \n", i+1);
+        }
+    }
+    printf("--------------------------\n");
+}
+
 int main() {
     int grafo[N][N];
     FILE *file = fopen("matriz_teste.txt", "r");
@@ -67,6 +85,9 @@ int main() {
 
     // Chama a função para encontrar os vértices isolados
     encontrarVerticesIsolados(grafo);
+
+    // Chama a função para encontrar o vértice sumidouro
+    encontrarVerticeSumidouro(grafo);
 
     return 0;
 }
