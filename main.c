@@ -92,6 +92,26 @@ void verificarConexao(int grafo[N][N]) {
     }
 }
 
+// Função para escrever o grau de cada vértice em um arquivo
+void escreverGraus(int grafo[N][N]) {
+    FILE *file = fopen("dados_grafos_graus.txt", "w");
+
+    if (file == NULL) {
+        printf("Não foi possível abrir o arquivo.\n");
+        return;
+    }
+
+    for (int i = 0; i < N; i++) {
+        int grau = 0;
+        for (int j = 0; j < N; j++) {
+            grau += grafo[i][j];
+        }
+        fprintf(file, "d(%d) = %d\n", i+1, grau);
+    }
+
+    fclose(file);
+}
+
 int main() {
     int grafo[N][N];
     FILE *file = fopen("matriz_teste.txt", "r");
@@ -114,6 +134,9 @@ int main() {
     encontrarVerticeSumidouro(grafo);
     encontrarVerticeFonte(grafo);
     verificarConexao(grafo);
+
+    // Chama a função para escrever o grau de cada vértice em um arquivo
+    escreverGraus(grafo);
 
     return 0;
 }
