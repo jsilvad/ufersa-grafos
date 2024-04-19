@@ -77,7 +77,19 @@ void encontrarVerticeFonte(int grafo[N][N]) {
             printf("%d \n", j+1);
         }
     }
-    printf("--------------------------\n");
+    printf("---------------------------------------------------\n");
+}
+
+// Função para verificar se o primeiro e o último vértice estão conectados
+void verificarConexao(int grafo[N][N]) {
+    if (grafo[0][N-1] == 1 || grafo[N-1][0] == 1) {
+        printf("O primeiro e o ultimo vertice estao conectados.\n");
+        printf("---------------------------------------------------\n");
+
+    } else {
+        printf("O primeiro e o ultimo vertice NAO estao conectados.\n");
+        printf("---------------------------------------------------\n");
+    }
 }
 
 int main() {
@@ -101,6 +113,7 @@ int main() {
     encontrarVerticesIsolados(grafo);
     encontrarVerticeSumidouro(grafo);
     encontrarVerticeFonte(grafo);
+    verificarConexao(grafo);
 
     return 0;
 }
