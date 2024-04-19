@@ -31,6 +31,7 @@ void encontrarMaiorGrau(int** grafo) {
 
 // Função para encontrar os vértices isolados
 void encontrarVerticesIsolados(int** grafo) {
+    int isolado = 0;
     printf("VERTICE(S) ISOLADO(S): \n");
     for (int i = 0; i < N; i++) {
         int somaLinha = 0;
@@ -41,7 +42,11 @@ void encontrarVerticesIsolados(int** grafo) {
         }
         if (somaLinha == 0 && somaColuna == 0) {
             printf("%d \n", i+1);
+            isolado = 1;
         }
+    }
+    if (isolado == 0) {
+        printf("Nenhum\n");
     }
     printf("--------------------------\n");
 }
@@ -77,18 +82,20 @@ void encontrarVerticeFonte(int** grafo) {
             printf("%d \n", j+1);
         }
     }
-    printf("---------------------------------------------------\n");
+    printf("-----------------------------------------------\n");
 }
 
 // Função para verificar se o primeiro e o último vértice estão conectados
 void verificarConexao(int** grafo) {
     if (grafo[0][N-1] == 1 || grafo[N-1][0] == 1) {
-        printf("O primeiro e o ultimo vertice estao conectados.\n");
-        printf("---------------------------------------------------\n");
+        printf("O PRIMEIRO E O ULTIMO VERTICE ESTAO CONECTADOS?\n");
+        printf("Sim\n");
+        printf("-----------------------------------------------\n");
 
     } else {
-        printf("O primeiro e o ultimo vertice NAO estao conectados.\n");
-        printf("---------------------------------------------------\n");
+        printf("O PRIMEIRO E O ULTIMO VERTICE ESTAO CONECTADOS?\n");
+        printf("Nao\n");
+        printf("-----------------------------------------------\n");
     }
 }
 
@@ -107,6 +114,46 @@ void escreverGraus(int** grafo) {
             grau += grafo[i][j];
         }
         fprintf(file, "d(%d) = %d\n", i+1, grau);
+    }
+
+    fclose(file);
+}
+
+// Função para escrever o grau de emissão de cada vértice em um arquivo
+void escreverGrausEmissao(int** grafo) {
+    FILE *file = fopen("dados_grafos_emissao.txt", "w");
+
+    if (file == NULL) {
+        printf("Não foi possível abrir o arquivo.\n");
+        return;
+    }
+
+    for (int i = 0; i < N; i++) {
+        int grau = 0;
+        for (int j = 0; j < N; j++) {
+            grau += grafo[i][j];
+        }
+        fprintf(file, "de(%d) = %d\n", i+1, grau);
+    }
+
+    fclose(file);
+}
+
+// Função para escrever o grau de recepção de cada vértice em um arquivo
+void escreverGrausRecepcao(int** grafo) {
+    FILE *file = fopen("dados_grafos_recepcao.txt", "w");
+
+    if (file == NULL) {
+        printf("Não foi possível abrir o arquivo.\n");
+        return;
+    }
+
+    for (int j = 0; j < N; j++) {
+        int grau = 0;
+        for (int i = 0; i < N; i++) {
+            grau += grafo[i][j];
+        }
+        fprintf(file, "dr(%d) = %d\n", j+1, grau);
     }
 
     fclose(file);
@@ -142,6 +189,10 @@ int main() {
 
     // Chama a função para escrever o grau de cada vértice em um arquivo
     escreverGraus(grafo);
+
+    // Chama as funções para escrever os graus de emissão e recepção em arquivos
+    escreverGrausEmissao(grafo);
+    escreverGrausRecepcao(grafo);
 
     // Libera a memória alocada para a matriz
     for (int i = 0; i < N; i++) {
