@@ -30,13 +30,15 @@ void encontrarMaiorGrau(int grafo[N][N]) {
 
 // Função para encontrar os vértices isolados
 void encontrarVerticesIsolados(int grafo[N][N]) {
-    printf("VERTICE(S) ISOLADO(S): ");
+    printf("VERTICE(S) ISOLADO(S): \n");
     for (int i = 0; i < N; i++) {
-        int soma = 0;
+        int somaLinha = 0;
+        int somaColuna = 0;
         for (int j = 0; j < N; j++) {
-            soma += grafo[i][j];
+            somaLinha += grafo[i][j];
+            somaColuna += grafo[j][i];
         }
-        if (soma == 0) {
+        if (somaLinha == 0 && somaColuna == 0) {
             printf("%d \n", i+1);
         }
     }
