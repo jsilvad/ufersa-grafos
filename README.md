@@ -22,8 +22,6 @@ O projeto inclui as seguintes funcionalidades:
 
 8. **Inversão de Arestas**: Inverte todas as arestas do grafo original e escreve a matriz de adjacência do grafo invertido em um arquivo chamado 'dados_grafo_invertido.txt'.
 
-9. **Criação de Subgrafo**: Cria um subgrafo contendo apenas os vértices que são múltiplos de 5 e escreve a matriz de adjacência do subgrafo em um arquivo chamado 'dados_grafo_gerador.txt'.
-
 ## Como Executar
 
 Para compilar o código, use o seguinte comando:
