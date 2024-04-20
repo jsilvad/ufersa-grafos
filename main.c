@@ -159,6 +159,29 @@ void escreverGrausRecepcao(int** grafo) {
     fclose(file);
 }
 
+// Função para escrever o grafo complementar em um arquivo
+void escreverGrafoComplementar(int** grafo) {
+    FILE *file = fopen("dados_grafo_complementar.txt", "w");
+
+    if (file == NULL) {
+        printf("Não foi possível abrir o arquivo.\n");
+        return;
+    }
+
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            // Se i é diferente de j e a aresta existe, então a aresta não existe no grafo complementar
+            // Se i é diferente de j e a aresta não existe, então a aresta existe no grafo complementar
+            // Se i é igual a j, então a aresta não existe no grafo complementar
+            int complementar = (i != j && grafo[i][j] == 0) ? 1 : 0;
+            fprintf(file, "%d ", complementar);
+        }
+        fprintf(file, "\n");
+    }
+
+    fclose(file);
+}
+
 int main() {
     // Aloca a matriz dinamicamente
     int** grafo = (int**)malloc(N * sizeof(int*));
@@ -193,6 +216,9 @@ int main() {
     // Chama as funções para escrever os graus de emissão e recepção em arquivos
     escreverGrausEmissao(grafo);
     escreverGrausRecepcao(grafo);
+
+    // Chama a função para escrever o grafo complementar em um arquivo
+    escreverGrafoComplementar(grafo);
 
     // Libera a memória alocada para a matriz
     for (int i = 0; i < N; i++) {
