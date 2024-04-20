@@ -182,6 +182,25 @@ void escreverGrafoComplementar(int** grafo) {
     fclose(file);
 }
 
+// Função para inverter todas as arestas do grafo original
+void inverterArestas(int** grafo) {
+    FILE *file = fopen("dados_grafo_invertido.txt", "w");
+
+    if (file == NULL) {
+        printf("Não foi possível abrir o arquivo.\n");
+        return;
+    }
+
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            fprintf(file, "%d ", grafo[j][i]);
+        }
+        fprintf(file, "\n");
+    }
+
+    fclose(file);
+}
+
 int main() {
     // Aloca a matriz dinamicamente
     int** grafo = (int**)malloc(N * sizeof(int*));
@@ -219,6 +238,9 @@ int main() {
 
     // Chama a função para escrever o grafo complementar em um arquivo
     escreverGrafoComplementar(grafo);
+
+    // Chama a função para inverter todas as arestas do grafo original
+    inverterArestas(grafo);
 
     // Libera a memória alocada para a matriz
     for (int i = 0; i < N; i++) {
